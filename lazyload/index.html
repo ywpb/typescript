@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图片懒加载</title>
+    <link rel="stylesheet" href="./index.css">
+</head>
+<body>
+
+    <div class="container">
+        <div class="img-area">
+            <img data-img="./img/1.jpg" alt="">
+        </div>
+        <div class="img-area">
+            <img data-img="./img/2.jpeg" alt="">
+        </div>
+        <div class="img-area">
+            <img data-img="./img/3.jpg" alt="">
+        </div>
+        <div class="img-area">
+            <img data-img="./img/4.jpg" alt="">
+        </div>
+        <div class="img-area">
+            <img data-img="./img/5.jpg" alt="">
+        </div>
+        <div class="img-area">
+            <img data-img="./img/6.gif" alt="">
+        </div>
+    </div>
+    
+    <script src="./lazyout.js"></script>
+    <script type="module">
+        
+        const el = document.querySelectorAll('.img-area')
+        const lazy = new load(el)
+        
+        document.addEventListener('scroll',()=>{
+            lazy.load()
+        })
+        
+    </script>
+</body>
+</html>
