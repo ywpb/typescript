@@ -1,35 +1,34 @@
 "use strict";
 {
-    var IObserver = /** @class */ (function () {
+    class IObserver {
         // Observer:IntersectionObserver
-        function IObserver(els) {
+        constructor(els) {
             this.els = els;
         }
-        IObserver.prototype.IntersectionObserver = function (els) {
-            var callback = function (change) {
-                change.forEach(function (item) {
+        IntersectionObserver(els) {
+            let callback = (change) => {
+                change.forEach((item) => {
                     if (item.isIntersecting) {
-                        var img = item.target.querySelector('img');
-                        var src = img.getAttribute('data-img');
+                        const img = item.target.querySelector('img');
+                        const src = img.getAttribute('data-img');
                         img.src = src;
                         Observer.unobserve(item.target);
                     }
                 });
             };
-            var Observer = new IntersectionObserver(callback);
-            els.forEach(function (el) {
+            let Observer = new IntersectionObserver(callback);
+            els.forEach(el => {
                 Observer.observe(el);
             });
-        };
-        IObserver.prototype.load = function () {
-            this.IntersectionObserver(els_1);
+        }
+        load() {
+            this.IntersectionObserver(els);
             // this.els.forEach((el)=>{
             //     this.Observer.observe(el)
             // })
-        };
-        return IObserver;
-    }());
-    var els_1 = document.querySelectorAll('.img-area');
-    var lazy = new IObserver(els_1);
+        }
+    }
+    const els = document.querySelectorAll('.img-area');
+    let lazy = new IObserver(els);
     lazy.load();
 }
