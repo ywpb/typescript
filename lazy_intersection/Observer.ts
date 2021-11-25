@@ -1,32 +1,39 @@
 {
     class IObserver{
         els:NodeListOf<Element>
-        Observer:IntersectionObserver
+        // Observer:IntersectionObserver
 
         constructor(els:NodeListOf<Element>){
             this.els = els
-            this.Observer = new IntersectionObserver(this.callback)
+            
         }
         
-        // protected setSrc(el:HTMLImageElement,data:string){
-        //     const src = el.getAttribute(data)
-        //     console.log(src);
-        // }
+        protected IntersectionObserver(els:NodeListOf<Element>){
 
-        protected callback(change:IntersectionObserverEntry[]){
-            change.forEach((item)=>{
-                if(item.isIntersecting){
-                    const img = item.target.querySelector('img') as HTMLImageElement
-                    const src = img.getAttribute('data-img') as string
-                    img.src = src
-                    
-                }
+            let callback = (change:IntersectionObserverEntry[]) =>{
+                change.forEach((item)=>{
+                    if(item.isIntersecting){
+                        const img = item.target.querySelector('img') as HTMLImageElement
+                        const src = img.getAttribute('data-img') as string
+                        img.src = src
+                        Observer.unobserve(item.target)
+                    }
+                })
+            }
+
+            let Observer:IntersectionObserver = new IntersectionObserver(callback)
+
+            els.forEach(el=>{
+                Observer.observe(el)
             })
         }
+
         load(){
-            this.els.forEach((el)=>{
-                this.Observer.observe(el)
-            })
+
+            this.IntersectionObserver(els)
+            // this.els.forEach((el)=>{
+            //     this.Observer.observe(el)
+            // })
         }
     }
 
