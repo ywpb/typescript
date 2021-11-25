@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图片懒加载</title>
+    <link rel="stylesheet" href="./index.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+<body>
+
+    <div id='app' class="container">
+        <div 
+        class="img-area" 
+        v-for='(img,index) of dataImg' 
+        :key='index'
+        v-img="{src:img}"
+        >
+            <img 
+            
+            alt="">
+        </div>
+    </div>
+       
+
+    <script>
+        const Observer = (el,value)=>{
+            let _observer = new IntersectionObserver(([{isIntersecting,target }])=>{
+                    if(isIntersecting ){
+                        const img = target.querySelector('img')
+                        img.src = value.src
+                        _observer.unobserve(target)
+                    }
+                },{rootMargin:"0px 0px 20px 0px"})
+                _observer.observe(el)
+        }
+         Vue.directive('img',{
+            bind(el,binding,vnode){
+                let value = binding.value
+                Observer(el,value)
+            }
+        })
+
+
+        var app = new Vue({
+            el:'#app',
+            data:{
+                message:'hello',
+                dataImg:[
+                    './img/1.jpg',
+                    './img/2.jpeg',
+                    './img/3.jpg',
+                    './img/4.jpg',
+                    './img/5.jpg',
+                    './img/6.gif'
+                ]
+            }
+        })
+
+       
+    </script>
+</body>
+</html>
